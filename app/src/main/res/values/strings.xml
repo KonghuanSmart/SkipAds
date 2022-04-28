@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">SkipAds</string>
+    <string name="app_package_name">com.konghuan.skipads</string>
+    <string name="test">无障碍测试</string>
+    <string name="hide_me">从最近任务中隐藏</string>
+    <string name="protect_me">将应用加入白名单</string>
+    <string name="show_skip_toast">跳过广告显示通知</string>
+    <string name="no_accessibility_permission">未获取到无障碍权限</string>
+    <string name="text">管理</string>
+    <string name="instructions">使用说明</string>
+    <string name="question">问题反馈</string>
+    <string name="whitelist">白名单</string>
+    <string name="reminder">跳过提示</string>
+    <string name="time">跳过详情</string>
+    <string name="btn_setting">更多设置</string>
+    <string name="self_defined">自定义规则</string>
+    <string name="times">99</string>
+    <string name="time2">次</string>
+</resources>

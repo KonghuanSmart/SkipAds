@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/logout_item" android:title="退出登录" />
+    <item android:id="@+id/exit_item" android:title="退出软件" />
+
+</menu>
