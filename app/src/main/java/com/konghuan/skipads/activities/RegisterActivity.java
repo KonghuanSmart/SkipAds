@@ -23,7 +23,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etAccount,etPassword,etPassconfirm;
     private CheckBox cBtn;
 
-    private static AccountService service = new AccountService();
+    private static final AccountService service = new AccountService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

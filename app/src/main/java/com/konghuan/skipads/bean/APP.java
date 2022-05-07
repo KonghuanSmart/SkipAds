@@ -3,45 +3,54 @@ package com.konghuan.skipads.bean;
 import android.graphics.drawable.Drawable;
 
 public class APP {
-    private Drawable Img;
-    private String Name;
-    private String Edition;
+    private Drawable img;
+    private String name;
+    private String edition;
+    private String packageName;
 
     public APP() {
     }
 
     public APP(String name,String edition, Drawable img) {
-        this.Img = img;
-        this.Name = name;
-        this.Edition = edition;
+        this.img = img;
+        this.name = name;
+        this.edition = edition;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public void setPackageName(String packageName) {
+        this.packageName = packageName;
     }
 
     public Drawable getImg() {
-        return Img;
+        return img;
     }
 
     public void setImg(Drawable img) {
-        Img = img;
+        this.img = img;
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public String getEdition() {
-        return Edition;
+        return edition;
     }
 
     public void setEdition(String edition) {
-        Edition = edition;
+        this.edition = edition;
     }
 
     public void setImageResourceId(Drawable imageResourceId) {
-        this.Img = imageResourceId;
+        this.img = imageResourceId;
     }
 
 }
