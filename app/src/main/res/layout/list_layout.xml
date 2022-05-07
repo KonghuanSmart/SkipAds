@@ -5,7 +5,8 @@
     android:paddingLeft="10dp"
     android:paddingTop="5dp"
     android:paddingRight="10dp"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp"
+    android:id="@+id/list_layout">
 
     <ImageView
         android:id="@+id/iv_img"
@@ -26,5 +27,19 @@
         android:text="lbwnb"
         android:textSize="20sp"
         android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tv_edition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="100dp"
+        android:layout_toRightOf="@+id/iv_img"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="lbwnb"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

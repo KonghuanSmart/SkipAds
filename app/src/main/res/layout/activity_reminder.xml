@@ -19,18 +19,6 @@
             android:textAllCaps="false"/>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn1"
-        android:background="@drawable/button_style2"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginBottom="100dp"
-        android:layout_gravity="end|bottom"
-        android:layout_marginRight="20dp"
-        android:layout_marginEnd="20dp"
-        android:text="@string/text"
-        android:textColor="@color/black"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -42,6 +30,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentLeft="true"
             android:gravity="center"
+            android:onClick="tv1"
             android:textColor="@color/black"
             android:layout_marginLeft="70dp"
             android:layout_marginBottom="10dp"
@@ -55,6 +44,7 @@
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:gravity="center"
+            android:onClick="tv2"
             android:textColor="@color/black"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="70dp"

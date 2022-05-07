@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.AppInformation">
+
+    <ImageView
+        android:id="@+id/iv_AppName"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/show_skip_toast"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_AppName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/appname"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:layout_below="@+id/iv_AppName"/>
+
+    <TextView
+        android:id="@+id/tv_AppEdition"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/appedition"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:layout_below="@+id/tv_AppName"/>
+
+    <Button
+        android:id="@+id/btn_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="添加自定义跳过广告"
+        android:onClick="buttonadd"
+        android:layout_below="@+id/tv_AppEdition"/>
+
+    <Button
+        android:id="@+id/btn_renewal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="修改自定义跳过广告"
+        android:onClick="buttonrenewal"
+        android:layout_below="@+id/tv_AppEdition"/>
+
+    <Button
+        android:id="@+id/btn_delete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="删除自定义跳过广告"
+        android:onClick="buttondelete"
+        android:layout_below="@+id/btn_renewal"/>
+
+</RelativeLayout>

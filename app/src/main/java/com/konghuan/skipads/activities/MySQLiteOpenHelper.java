@@ -49,7 +49,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put("img",app.getImg());
+//        values.put("img",app.getImg());
         values.put("name",app.getName());
 
         //添加在Reminder表
@@ -78,7 +78,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
                 String name = cursor.getString(cursor.getColumnIndex("name"));
 
                 APP app = new APP();
-                app.setImg(img);
+//                app.setImg(img);
                 app.setName(name);
 
                 appList.add(app);

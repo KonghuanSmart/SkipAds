@@ -16,4 +16,6 @@
     <string name="self_defined">自定义规则</string>
     <string name="times">99</string>
     <string name="time2">次</string>
+    <string name="appname">appname</string>
+    <string name="appedition">版本:1.2.3.4</string>
 </resources>
