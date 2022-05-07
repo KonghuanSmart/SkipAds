@@ -29,6 +29,7 @@ public class TimeActivity extends AppCompatActivity {
     private Handler handler;
     private TextView adContent;
     private TextView skipTimes;
+    private static RuleService ruleService;
     private final int CHANGE_TEXT = 1;
 
 
@@ -71,7 +72,6 @@ public class TimeActivity extends AppCompatActivity {
         String packageName = sharedPreferences.getString("packageName", null);
         String rule = sharedPreferences.getString("id",null);
         if (packageName != null && rule != null){
-            RuleService ruleService = new RuleService(this);
             Rule rule1 = ruleService.getRuleByName(packageName);
             if (rule1 != null){
                 if (rule1.getRule().equals(rule)){
@@ -99,6 +99,7 @@ public class TimeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ruleService = new RuleService(this);
         setContentView(R.layout.activity_time);
 
         getSupportActionBar().setTitle("跳过详情");

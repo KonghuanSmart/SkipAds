@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.konghuan.skipads.R;
-import com.konghuan.skipads.service.Impl.AccountDaoImpl;
 
 /**
  * 开屏页面
