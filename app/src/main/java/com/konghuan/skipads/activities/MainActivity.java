@@ -16,16 +16,16 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.konghuan.skipads.R;
+import com.konghuan.skipads.utils.AppConfig;
+import com.konghuan.skipads.utils.ConfigUtil;
 import com.konghuan.skipads.utils.SettingsHelper;
 
 public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         getSupportActionBar().setTitle("SkipAds");
 
         Button btn = findViewById(R.id.tv1);
