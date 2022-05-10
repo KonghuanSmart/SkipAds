@@ -36,6 +36,7 @@
         android:gravity="center"
         android:layout_below="@+id/tv_AppName"/>
 
+<!--  自定义  -->
     <Button
         android:id="@+id/btn_add"
         android:layout_width="match_parent"
@@ -68,5 +69,51 @@
         android:text="删除自定义跳过广告"
         android:onClick="buttondelete"
         android:layout_below="@+id/btn_renewal"/>
+
+<!--  白名单  -->
+    <Button
+        android:id="@+id/btn_white_on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="将本应用加入白名单列表"
+        android:onClick="button_white_on"
+        android:layout_below="@+id/tv_AppEdition"/>
+
+    <Button
+        android:id="@+id/btn_white_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="将本应用移出白名单列表"
+        android:onClick="button_white_off"
+        android:layout_below="@+id/tv_AppEdition"/>
+
+<!--  提示  -->
+    <Button
+        android:id="@+id/btn_reminder_on"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="本应用显示跳过提示"
+        android:onClick="button_reminder_on"
+        android:layout_below="@+id/tv_AppEdition"/>
+
+    <Button
+        android:id="@+id/btn_reminder_off"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginLeft="50dp"
+        android:text="本应用隐藏跳过提示"
+        android:onClick="button_reminder_off"
+        android:layout_below="@+id/btn_white_on"/>
 
 </RelativeLayout>

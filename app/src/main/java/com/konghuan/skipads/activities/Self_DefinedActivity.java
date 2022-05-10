@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.adapter.MyAdapter;
 import com.konghuan.skipads.bean.APP;
+import com.konghuan.skipads.utils.AppConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,8 +27,6 @@ public class Self_DefinedActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private List<APP> mAppList;
     private MyAdapter myAdapter;
-
-    private MySQLiteOpenHelper mMySQLiteOpenHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +68,7 @@ public class Self_DefinedActivity extends AppCompatActivity {
 
     //RecyclerView操作
     private void initEvent() {
-        myAdapter = new MyAdapter(this,mAppList);
+        myAdapter = new MyAdapter(this,"Self_Defined",mAppList);
 
         mRecyclerView.setAdapter(myAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -77,51 +76,11 @@ public class Self_DefinedActivity extends AppCompatActivity {
     }
 
     private void intData() {
-        mAppList = new ArrayList<>();
-
-        List<APP> appList = new ArrayList<APP>(); //用来存储获取的应用信息数据　　　　　
-        List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-        for (int i = 0; i < packages.size(); i++) {
-            PackageInfo packageInfo = packages.get(i);
-            APP tmpInfo = new APP();
-            tmpInfo.setImageResourceId(packageInfo.applicationInfo.loadIcon(getPackageManager()));
-            tmpInfo.setName(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString());
-            tmpInfo.setEdition(packageInfo.versionName);
-            if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0)     {
-                appList.add(tmpInfo);//如果非系统应用，则添加至appList
-            }
-        }
-        mAppList = appList;
-    }
-
-    private List<APP> getDataFromDB() {
-        return mMySQLiteOpenHelper.queryAllFromDb();
+        AppConfig appConfig = new AppConfig();
+        mAppList = appConfig.getAppList(this);
     }
 
     private void initView() {
         mRecyclerView = findViewById(R.id.rlv);
-    }
-
-    //数据库操作
-    //添加数据
-    public void insert() {
-        int img = 1;//转换数据，应该这样写 etImg.getText().toString().trim();
-        String name = "1";//转换数据，应该这样写 etName.getText().toString().trim();
-
-        APP app = new APP();
-        app.setName(name);
-//        app.setImageResourceId(img);
-
-        //插入数据库中
-        mMySQLiteOpenHelper.insertData(app);
-    }
-
-    //删除数据
-    public void delect() {
-        String name = "1";
-
-        //按姓名删除
-        mMySQLiteOpenHelper.delectByName(name);
-
     }
 }

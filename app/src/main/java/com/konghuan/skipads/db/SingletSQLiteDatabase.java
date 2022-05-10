@@ -28,6 +28,8 @@ public class SingletSQLiteDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(Constants.CREATE_TABLE_ACCOUNT);
         db.execSQL(Constants.CREATE_TABLE_RULE);
+        db.execSQL(Constants.CREATE_TABLE_WHITE);
+        db.execSQL(Constants.CREATE_TABLE_REMINDER);
     }
 
     @Override
