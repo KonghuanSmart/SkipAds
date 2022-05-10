@@ -15,8 +15,9 @@ public class Constants {
     public static int ACCOUNT_EXIST = 1006;
 
     public static final String TABLE_ACCOUNT = "account";
-    public static final String TABLE_PACKAGE_NAME = "package_name";
     public static final String TABLE_RULE = "rule";
+    public static final String TABLE_WHITE = "white";
+    public static final String TABLE_REMINDER = "reminder";
 
     public static final String CREATE_TABLE_ACCOUNT =
             "CREATE TABLE "+TABLE_ACCOUNT+"(id varchar(255) PRIMARY KEY NOT NULL, " +
@@ -26,4 +27,10 @@ public class Constants {
     public static final String CREATE_TABLE_RULE =
             "CREATE TABLE "+TABLE_RULE+"(name varchar(255) NOT NULL PRIMARY KEY, " +
             "rule varchar(255) NOT NULL);";
+
+    public static final String CREATE_TABLE_WHITE =
+            "CREATE TABLE "+TABLE_WHITE+"(packagename varchar(255) NOT NULL PRIMARY KEY );";
+
+    public static final String CREATE_TABLE_REMINDER =
+            "CREATE TABLE "+TABLE_REMINDER+"(packagename varchar(255) NOT NULL PRIMARY KEY );";
 }

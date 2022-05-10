@@ -28,10 +28,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     private List<APP> mAppList;
     private LayoutInflater mLayoutInflater;
     private Context mContext;
+    private String ActivityName;
 
-    public MyAdapter(Context context,List<APP> mAppList){
+    public MyAdapter(Context context,String aN,List<APP> mAppList){
         this.mAppList = mAppList;
         this.mContext = context;
+        this.ActivityName = aN;
         mLayoutInflater = LayoutInflater.from(mContext);
     }
 
@@ -62,10 +64,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             public void onClick(View v) {
 
                 Intent intent = new Intent(mContext, AppInformation.class);
-
-                intent.putExtra("img", (Parcelable) app.getImg());
-                intent.putExtra("AppName", app.getName());
-                intent.putExtra("AppEdition", app.getEdition());
+                intent.putExtra("ActivityName",ActivityName);
+                intent.putExtra("AppPackage",app.getPackageName());
 
                 mContext.startActivity(intent);
             }

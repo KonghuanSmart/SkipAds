@@ -39,11 +39,11 @@ public class MainActivity extends AppCompatActivity {
                 }
                 switch (flag) {
                     case 0:
-                        btn.setBackgroundResource((R.drawable.button_style3));//点击按钮修改颜色
+                        btn.setBackgroundResource((R.drawable.earth_color));//点击按钮修改颜色
                         flag = 1;
                         break;
                     case 1:
-                        btn.setBackgroundResource((R.drawable.button_style2));
+                        btn.setBackgroundResource((R.drawable.earth_white));
                         flag = 0;
                         break;
                 }

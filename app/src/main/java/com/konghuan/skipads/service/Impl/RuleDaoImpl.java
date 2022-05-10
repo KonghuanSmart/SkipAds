@@ -68,7 +68,7 @@ public class RuleDaoImpl implements RuleDao {
 
     @Override
     public int delRule(String name) {
-        SQLiteStatement statement = db.compileStatement("delete from "+Constants.TABLE_RULE+" where rid = ?");
+        SQLiteStatement statement = db.compileStatement("delete from "+Constants.TABLE_RULE+" where name = ?");
         statement.bindString(1, name);
         return statement.executeUpdateDelete();
     }

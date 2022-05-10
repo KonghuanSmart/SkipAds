@@ -1,12 +1,16 @@
 package com.konghuan.skipads.activities;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,8 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.adapter.MyAdapter;
 import com.konghuan.skipads.bean.APP;
+import com.konghuan.skipads.service.AppService;
+import com.konghuan.skipads.service.Impl.AppDaoImpl;
+import com.konghuan.skipads.utils.AppConfig;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class WhiteListActivity extends AppCompatActivity {
@@ -26,8 +34,7 @@ public class WhiteListActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private List<APP> mAppList;
     private MyAdapter myAdapter;
-
-    private MySQLiteOpenHelper mMySQLiteOpenHelper;
+    private AppService service;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +76,7 @@ public class WhiteListActivity extends AppCompatActivity {
 
     //RecyclerView操作
     private void initEvent() {
-        myAdapter = new MyAdapter(this,mAppList);
+        myAdapter = new MyAdapter(this,"White",mAppList);
 
         mRecyclerView.setAdapter(myAdapter);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
@@ -79,49 +86,33 @@ public class WhiteListActivity extends AppCompatActivity {
     private void intData() {
         mAppList = new ArrayList<>();
 
-        List<APP> appList = new ArrayList<APP>(); //用来存储获取的应用信息数据　　　　　
-        List<PackageInfo> packages = getPackageManager().getInstalledPackages(0);
-        for (int i = 0; i < packages.size(); i++) {
-            PackageInfo packageInfo = packages.get(i);
-            APP tmpInfo = new APP();
-            tmpInfo.setImageResourceId(packageInfo.applicationInfo.loadIcon(getPackageManager()));
-            tmpInfo.setName(packageInfo.applicationInfo.loadLabel(getPackageManager()).toString());
-            tmpInfo.setEdition(packageInfo.versionName);
-            if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0)     {
-                appList.add(tmpInfo);//如果非系统应用，则添加至appList
-            }
+        service = new AppService(this);
+        List<String> allApp = service.getAllApp("White");
+        Iterator<String> iterator = allApp.iterator();
+        String next;
+        while (iterator.hasNext()){
+            next = iterator.next();
+            mAppList.add(AppConfig.getAppByPackageName(this, next));
         }
-        mAppList = appList;
-    }
-
-    private List<APP> getDataFromDB() {
-        return mMySQLiteOpenHelper.queryAllFromDb();
     }
 
     private void initView() {
         mRecyclerView = findViewById(R.id.rlv);
     }
 
-    //数据库操作
-    //添加数据
-    public void insert() {
-        int img = 1;//转换数据，应该这样写 etImg.getText().toString().trim();
-        String name = "1";//转换数据，应该这样写 etName.getText().toString().trim();
-
-        APP app = new APP();
-        app.setName(name);
-//        app.setImageResourceId(img);
-
-        //插入数据库中
-        mMySQLiteOpenHelper.insertData(app);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_white_reminder, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
-    //删除数据
-    public void delect() {
-        String name = "1";
-
-        //按姓名删除
-        mMySQLiteOpenHelper.delectByName(name);
-
+    @SuppressLint("NonConstantResourceId")
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.logout_localapp) {
+            Intent intent = new Intent(WhiteListActivity.this, LocalAppList.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
