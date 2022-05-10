@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import com.konghuan.skipads.R;
+import com.konghuan.skipads.utils.AppConfig;
 
 /**
  * 开屏页面
@@ -16,7 +17,6 @@ import com.konghuan.skipads.R;
  */
 public class SplashActivity extends Activity {
 
-    private static final int delayTime = 1000;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -39,11 +39,7 @@ public class SplashActivity extends Activity {
     protected void onStart() {
         super.onStart();
         new Thread(() -> {
-            try {
-                Thread.sleep(delayTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            AppConfig.getAppList(SplashActivity.this);
             startActivity(new Intent(SplashActivity.this, LoginActivity.class));
             finish();
         }).start();
