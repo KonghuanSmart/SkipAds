@@ -49,7 +49,7 @@ public class WhiteListActivity extends AppCompatActivity {
         //AlertDialog对话框
         AlertDialog alertDialog = new AlertDialog.Builder(WhiteListActivity.this).create();
         alertDialog.setTitle("使用说明");
-        alertDialog.setMessage("点击设置添加自定义跳过规则");
+        alertDialog.setMessage("默认没有加入白名单，可以通过点击目录，再点击添加应用来选择想要添加进白名单的APP。");
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

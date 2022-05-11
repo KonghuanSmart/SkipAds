@@ -114,7 +114,7 @@ public class TimeActivity extends AppCompatActivity {
                 //AlertDialog对话框
                 AlertDialog alertDialog = new AlertDialog.Builder(TimeActivity.this).create();
                 alertDialog.setTitle("使用说明");
-                alertDialog.setMessage("每自动关闭一个广告就会添加次数");
+                alertDialog.setMessage("上面部分会显示上一次自动跳过的规则，下面部分是累计自动跳过广告的总次数。");
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

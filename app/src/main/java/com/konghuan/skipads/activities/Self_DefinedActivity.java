@@ -44,7 +44,7 @@ public class Self_DefinedActivity extends AppCompatActivity {
         //AlertDialog对话框
         AlertDialog alertDialog = new AlertDialog.Builder(Self_DefinedActivity.this).create();
         alertDialog.setTitle("使用说明");
-        alertDialog.setMessage("点击设置添加自定义跳过规则");
+        alertDialog.setMessage("会默认添加跳过规则，如果你有编程功底可以手动编辑规则，点击应用如何点击修改自定义跳过广告，就能手动编辑。");
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

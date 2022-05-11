@@ -37,8 +37,6 @@ public class AppInformationActivity extends AppCompatActivity {
     private AppService service;
     private RuleService rService;
 
-    private boolean temp = true;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,8 +137,18 @@ public class AppInformationActivity extends AppCompatActivity {
     }
 
     public void buttondelete(View view) {
-        rService = new RuleService(this);
-        rService.delRule(AppPackageName);
+        //AlertDialog对话框
+        AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+        alertDialog.setTitle("提示");
+        alertDialog.setMessage("确定要删除吗？");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                rService = new RuleService(AppInformationActivity.this);
+                rService.delRule(AppPackageName);
+            }
+        });
+        alertDialog.show();
     }
 
     public void button_white_on(View view) {
@@ -153,8 +161,18 @@ public class AppInformationActivity extends AppCompatActivity {
     }
 
     public void button_white_off(View view) {
-        service = new AppService(this);
-        service.delApp(AppPackageName,"White");
+        //AlertDialog对话框
+        AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+        alertDialog.setTitle("提示");
+        alertDialog.setMessage("确定要移出白名单吗？");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                service = new AppService(AppInformationActivity.this);
+                service.delApp(AppPackageName,"White");
+            }
+        });
+        alertDialog.show();
     }
 
     //隐藏跳过提示（从数据库移除）
@@ -166,8 +184,18 @@ public class AppInformationActivity extends AppCompatActivity {
     //显示跳过提示（添加进数据库）
     public void button_reminder_off(View view) {
         if (White_Reminder_exist(AppPackageName, "Reminder")){
-            service = new AppService(this);
-            service.addApp(AppPackageName,"Reminder");
+            //AlertDialog对话框
+            AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+            alertDialog.setTitle("提示");
+            alertDialog.setMessage("确定要隐藏跳过提示吗？");
+            alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    service = new AppService(AppInformationActivity.this);
+                    service.addApp(AppPackageName,"Reminder");
+                }
+            });
+            alertDialog.show();
         }else {
             remind();
         }
