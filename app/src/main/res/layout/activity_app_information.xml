@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".activities.AppInformation">
+    tools:context=".activities.AppInformationActivity">
 
     <ImageView
         android:id="@+id/iv_AppName"
@@ -101,7 +101,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
-        android:text="本应用显示跳过提示"
+        android:text="本应用隐藏跳过提示"
         android:onClick="button_reminder_on"
         android:layout_below="@+id/tv_AppEdition"/>
 
@@ -112,7 +112,7 @@
         android:layout_marginTop="20dp"
         android:layout_marginRight="50dp"
         android:layout_marginLeft="50dp"
-        android:text="本应用隐藏跳过提示"
+        android:text="本应用显示跳过提示"
         android:onClick="button_reminder_off"
         android:layout_below="@+id/btn_white_on"/>
 

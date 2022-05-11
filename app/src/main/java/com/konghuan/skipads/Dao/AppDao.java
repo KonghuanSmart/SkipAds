@@ -10,7 +10,7 @@ public interface AppDao {
 
     int addApp(String packagename, String avtivityname);
 //    int updateApp(String packagename, String avtivityname);
-    String getAppByName(String packagename);
+    String getAppByName(String packagename, String activityName);
     int delApp(String packagename, String avtivityname);
     List<String> getAllApp(String avtivityName);
 }
