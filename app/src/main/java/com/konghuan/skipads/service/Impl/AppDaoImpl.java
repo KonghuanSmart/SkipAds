@@ -68,19 +68,32 @@ public class AppDaoImpl implements AppDao{
 
 
     @Override
-    public String getAppByName(String name) {
-        Cursor cursor = db.query(
-                Constants.TABLE_WHITE,
-                new String[]{"*"},
-                "packagename=?",
-                new String[]{name},
-                null,
-                null,
-                null
-        );
+    public String getAppByName(String name,String activityName) {
+        Cursor cursor = null;
+        switch (activityName) {
+            case "White" : cursor = db.query(
+                    Constants.TABLE_WHITE,
+                    new String[]{"*"},
+                    "packagename=?",
+                    new String[]{name},
+                    null,
+                    null,
+                    null
+            );break;
+            case "Reminder" : cursor = db.query(
+                    Constants.TABLE_REMINDER,
+                    new String[]{"*"},
+                    "packagename=?",
+                    new String[]{name},
+                    null,
+                    null,
+                    null
+            );break;
+        }
         if (cursor.moveToNext()){
             return cursor.getString(cursor.getColumnIndex("packagename"));
         }
+        cursor.close();
         return null;
     }
 

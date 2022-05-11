@@ -3,8 +3,6 @@ package com.konghuan.skipads.activities;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,7 +19,6 @@ import com.konghuan.skipads.R;
 import com.konghuan.skipads.adapter.MyAdapter;
 import com.konghuan.skipads.bean.APP;
 import com.konghuan.skipads.service.AppService;
-import com.konghuan.skipads.service.Impl.AppDaoImpl;
 import com.konghuan.skipads.utils.AppConfig;
 
 import java.util.ArrayList;
@@ -110,7 +107,7 @@ public class WhiteListActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.logout_localapp) {
-            Intent intent = new Intent(WhiteListActivity.this, LocalAppList.class);
+            Intent intent = new Intent(WhiteListActivity.this, LocalAppListActivity.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

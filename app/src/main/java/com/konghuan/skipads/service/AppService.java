@@ -25,8 +25,8 @@ public class AppService {
         return appDao.delApp(packagename, activityname);
     }
 
-    public String getAppByName(String packagename){
-        return appDao.getAppByName(packagename);
+    public String getAppByName(String packagename, String activityName){
+        return appDao.getAppByName(packagename, activityName);
     }
 
 //    public int updateApp(String packagename, String activityname){

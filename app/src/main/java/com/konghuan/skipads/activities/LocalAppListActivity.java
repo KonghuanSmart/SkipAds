@@ -15,7 +15,7 @@ import com.konghuan.skipads.utils.AppConfig;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocalAppList extends AppCompatActivity {
+public class LocalAppListActivity extends AppCompatActivity {
 
     //listview
     private RecyclerView mRecyclerView;

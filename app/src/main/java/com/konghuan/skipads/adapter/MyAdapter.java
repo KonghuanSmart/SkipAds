@@ -2,11 +2,6 @@ package com.konghuan.skipads.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.PixelFormat;
-import android.graphics.drawable.Drawable;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +12,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.konghuan.skipads.R;
-import com.konghuan.skipads.activities.AppInformation;
+import com.konghuan.skipads.activities.AppInformationActivity;
 import com.konghuan.skipads.bean.APP;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
@@ -63,7 +57,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             @Override
             public void onClick(View v) {
 
-                Intent intent = new Intent(mContext, AppInformation.class);
+                Intent intent = new Intent(mContext, AppInformationActivity.class);
                 intent.putExtra("ActivityName",ActivityName);
                 intent.putExtra("AppPackage",app.getPackageName());
 

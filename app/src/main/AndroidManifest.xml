@@ -15,8 +15,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.SkipAds">
-        <activity android:name=".activities.LocalAppList"></activity>
-        <activity android:name=".activities.AppInformation" />
+        <activity android:name=".activities.LocalAppListActivity" />
+        <activity android:name=".activities.AppInformationActivity" />
 
         <service
             android:name=".service.SkipAdsService"

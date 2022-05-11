@@ -5,8 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,9 +14,10 @@ import android.widget.TextView;
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.bean.APP;
 import com.konghuan.skipads.service.AppService;
+import com.konghuan.skipads.service.RuleService;
 import com.konghuan.skipads.utils.AppConfig;
 
-public class AppInformation extends AppCompatActivity {
+public class AppInformationActivity extends AppCompatActivity {
 
     private ImageView iv_AppImg;
     private TextView tv_AppName;
@@ -34,6 +33,7 @@ public class AppInformation extends AppCompatActivity {
     private String activityName;
     private String AppPackageName;
     private AppService service;
+    private RuleService rService;
 
     private boolean temp = true;
 
@@ -74,7 +74,7 @@ public class AppInformation extends AppCompatActivity {
             btn_reminder_on.setVisibility(View.INVISIBLE);
             btn_reminder_off.setVisibility(View.INVISIBLE);
             break;
-            case "Self_Defined":if (temp){
+            case "Self_Defined":if (Rule_exist(AppPackageName)){
                 //自定义规则默认为没有
                 btn_add.setVisibility(View.VISIBLE);
                 btn_renewal.setVisibility(View.INVISIBLE);
@@ -128,17 +128,26 @@ public class AppInformation extends AppCompatActivity {
     }
 
     public void buttonadd(View view) {
+        rService = new RuleService(this);
+        rService.addRule(AppPackageName,"1");
     }
 
     public void buttonrenewal(View view) {
+        self_Set();
     }
 
     public void buttondelete(View view) {
+        rService = new RuleService(this);
+        rService.delRule(AppPackageName);
     }
 
     public void button_white_on(View view) {
-        service = new AppService(this);
-        service.addApp(AppPackageName,"White");
+        if (White_Reminder_exist(AppPackageName, "White")){
+            service = new AppService(this);
+            service.addApp(AppPackageName,"White");
+        }else {
+            remind();
+        }
     }
 
     public void button_white_off(View view) {
@@ -146,13 +155,63 @@ public class AppInformation extends AppCompatActivity {
         service.delApp(AppPackageName,"White");
     }
 
+    //隐藏跳过提示（从数据库移除）
     public void button_reminder_on(View view) {
         service = new AppService(this);
         service.delApp(AppPackageName,"Reminder");
     }
 
+    //显示跳过提示（添加进数据库）
     public void button_reminder_off(View view) {
+        if (White_Reminder_exist(AppPackageName, "Reminder")){
+            service = new AppService(this);
+            service.addApp(AppPackageName,"Reminder");
+        }else {
+            remind();
+        }
+    }
+
+    public boolean Rule_exist(String appPackageName){
+        rService = new RuleService(this);
+        if (rService.getRuleByName(appPackageName) == null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    public boolean White_Reminder_exist(String appPackageName, String activityName2){
         service = new AppService(this);
-        service.addApp(AppPackageName,"Reminder");
+        if (service.getAppByName(appPackageName, activityName2) == null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    private void remind() {
+        //AlertDialog对话框
+        AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+        alertDialog.setTitle("提示");
+        alertDialog.setMessage("不能重复添加相同的应用");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alertDialog.show();
+    }
+
+    private void self_Set(){
+        //AlertDialog对话框
+        AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+        alertDialog.setTitle("提示");
+        alertDialog.setMessage("不能重复添加相同的应用");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        alertDialog.show();
     }
 }
