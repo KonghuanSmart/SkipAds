@@ -16,36 +16,23 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.konghuan.skipads.R;
-import com.konghuan.skipads.utils.AppConfig;
-import com.konghuan.skipads.utils.ConfigUtil;
+import com.konghuan.skipads.service.SkipAdsService;
 import com.konghuan.skipads.utils.SettingsHelper;
 
 public class MainActivity extends AppCompatActivity {
-
+    private Button btn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().setTitle("SkipAds");
 
-        Button btn = findViewById(R.id.tv1);
+        btn = findViewById(R.id.tv1);
         btn.setOnClickListener(new View.OnClickListener() {
-            int flag = 0;
             @Override
             public void onClick(View v) {
-
-                if (!SettingsHelper.isAccessibilityServiceSettingsOn(MainActivity.this)){
-                    SettingsHelper.applyForAccessibilityPermission();
-                }
-                switch (flag) {
-                    case 0:
-                        btn.setBackgroundResource((R.drawable.earth_color));//点击按钮修改颜色
-                        flag = 1;
-                        break;
-                    case 1:
-                        btn.setBackgroundResource((R.drawable.earth_white));
-                        flag = 0;
-                        break;
+                if (!SkipAdsService.isRunningOn()){
+                    SettingsHelper.applyForAccessibilityPermission(MainActivity.this);
                 }
             }
         });
@@ -135,6 +122,16 @@ public class MainActivity extends AppCompatActivity {
             System.exit(0);
         });
         alertDialog.show();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (SkipAdsService.isRunningOn()){
+            btn.setBackgroundResource((R.drawable.earth_color));
+        }else {
+            btn.setBackgroundResource((R.drawable.earth_white));
+        }
     }
 
     @SuppressLint("NonConstantResourceId")

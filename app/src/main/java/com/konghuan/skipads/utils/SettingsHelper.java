@@ -17,7 +17,6 @@ import java.util.List;
 
 public class SettingsHelper {
     private static final String TAG = SettingsHelper.class.getName() + Constants.TAG_TAIL;
-    private static Context mContext;
 
     public static List<String> getThirdAppList(Context context)
     {
@@ -36,14 +35,12 @@ public class SettingsHelper {
 
     }
 
-    public static String[] getPackageNames(){
+    public static String[] getPackageNames(Context mContext){
         List<String> thirdAppList = getThirdAppList(mContext);
         return thirdAppList.toArray(new String[thirdAppList.size()]);
     }
 
-    public static boolean isAccessibilityServiceSettingsOn(Context context){
-        if (mContext == null)
-            mContext = context;
+    public static boolean isAccessibilityServiceSettingsOn(Context mContext){
         int accessibilityServiceEnabled = 0;
         final String service = mContext.getPackageName() + "/" + SkipAdsService.class.getCanonicalName();
         try {
@@ -77,7 +74,7 @@ public class SettingsHelper {
         return false;
     }
 
-    public static void applyForAccessibilityPermission(){
+    public static void applyForAccessibilityPermission(Context mContext){
         try {
             Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
             mContext.startActivity(intent);

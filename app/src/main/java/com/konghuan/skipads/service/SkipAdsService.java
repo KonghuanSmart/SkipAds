@@ -14,8 +14,6 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.Toast;
 
 import com.konghuan.skipads.Constants;
-import com.konghuan.skipads.R;
-import com.konghuan.skipads.entity.Rule;
 import com.konghuan.skipads.utils.ConfigUtil;
 import com.konghuan.skipads.utils.SettingsHelper;
 
@@ -29,9 +27,19 @@ public class SkipAdsService extends AccessibilityService {
     private static RuleService service;
     private static Map<String, String> rules;
 
+    private static AppService appService;
+    private static List<String> whiteList;
+    private static boolean running = false;
+
+    public static boolean isRunningOn(){
+        return running;
+    }
+
 
     private void init(){
         service = new RuleService(this);
+        appService = new AppService(this);
+        whiteList = appService.getAllApp("White");
         rules = service.getAllRule();
     }
 
@@ -42,16 +50,24 @@ public class SkipAdsService extends AccessibilityService {
         rules.put(name, rule);
     }
 
+    public static void addWhiteList(String name){
+        whiteList.add(name);
+    }
+    public static void removeWhiteList(String name){
+        whiteList.remove(name);
+    }
+
     @Override
     protected void onServiceConnected() {
         super.onServiceConnected();
         Log.d(TAG,"开始了！");
         init();
+        running = true;
         AccessibilityServiceInfo config = new AccessibilityServiceInfo();
         config.eventTypes = AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED | AccessibilityEvent.TYPE_VIEW_CLICKED;
         config.feedbackType = AccessibilityServiceInfo.FEEDBACK_GENERIC;
         config.notificationTimeout = 100;
-        config.packageNames = SettingsHelper.getPackageNames();
+        config.packageNames = SettingsHelper.getPackageNames(this);
         if (Build.VERSION.SDK_INT >= 16) {
             config.flags =
                     AccessibilityServiceInfo.FLAG_INCLUDE_NOT_IMPORTANT_VIEWS
@@ -68,11 +84,11 @@ public class SkipAdsService extends AccessibilityService {
         final AccessibilityNodeInfo nodeInfo = event.getSource();
         if (event.getEventType() == AccessibilityEvent.TYPE_WINDOW_STATE_CHANGED) {
             ComponentName componentName = new ComponentName(event.getPackageName().toString(), event.getClassName().toString());
-            ActivityInfo activityInfo = tryGetActivity(componentName);
+            ActivityInfo activityInfo = getActivityInfo(componentName);
             boolean isActivity = activityInfo != null;
             if (isActivity) {
                 String packageName = nodeInfo.getPackageName().toString();
-                if (packageName.equals(Constants.APP_NAME)){
+                if (packageName.equals(Constants.APP_NAME) || whiteList.contains(packageName)){
                     Log.d(TAG,"白名单！");
                     return;
                 }
@@ -85,7 +101,7 @@ public class SkipAdsService extends AccessibilityService {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putInt("times", ++times);
                     editor.apply();
-                    new Handler().postDelayed(() -> skip(nodeInfo.findAccessibilityNodeInfosByViewId(rule)), 500);
+                    new Handler().postDelayed(() -> skipAdsByRule(nodeInfo.findAccessibilityNodeInfosByViewId(rule)), 500);
                 }else {
                         List<AccessibilityNodeInfo> nodeInfoList = nodeInfo.findAccessibilityNodeInfosByText("跳过");
                         for (AccessibilityNodeInfo info : nodeInfoList) {
@@ -132,7 +148,7 @@ public class SkipAdsService extends AccessibilityService {
 
 
 
-    private void skip(List<AccessibilityNodeInfo> nodeInfoList) {
+    private void skipAdsByRule(List<AccessibilityNodeInfo> nodeInfoList) {
         if (nodeInfoList.size() > 0) {
             nodeInfoList.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
             SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(this, Constants.SHARE_NAME);
@@ -142,7 +158,7 @@ public class SkipAdsService extends AccessibilityService {
         }
     }
 
-    private ActivityInfo tryGetActivity(ComponentName componentName) {
+    private ActivityInfo getActivityInfo(ComponentName componentName) {
         try {
             return getPackageManager().getActivityInfo(componentName, 0);
         } catch (PackageManager.NameNotFoundException e) {
@@ -152,5 +168,6 @@ public class SkipAdsService extends AccessibilityService {
 
     @Override
     public void onInterrupt() {
+        running = false;
     }
 }

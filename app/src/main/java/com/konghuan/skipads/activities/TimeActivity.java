@@ -22,7 +22,6 @@ import com.konghuan.skipads.entity.Rule;
 import com.konghuan.skipads.service.RuleService;
 import com.konghuan.skipads.service.SkipAdsService;
 import com.konghuan.skipads.utils.ConfigUtil;
-import com.konghuan.skipads.utils.SettingsHelper;
 
 public class TimeActivity extends AppCompatActivity {
 
@@ -84,7 +83,7 @@ public class TimeActivity extends AppCompatActivity {
             }else {
                 ruleService.addRule(packageName,rule);
             }
-            if (SettingsHelper.isAccessibilityServiceSettingsOn(this)){
+            if (SkipAdsService.isRunningOn()){
                 SkipAdsService.updateRules(packageName, rule);
             }
             Toast.makeText(this, "保存成功！", Toast.LENGTH_LONG).show();

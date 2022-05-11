@@ -1,15 +1,17 @@
 package com.konghuan.skipads.activities;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.bean.APP;
@@ -203,13 +205,23 @@ public class AppInformationActivity extends AppCompatActivity {
     }
 
     private void self_Set(){
+        EditText editText = new EditText(this);
+        editText.setText(rService.getRuleByName(AppPackageName).getRule());
+        editText.requestFocus();
+        editText.setFocusable(true);
         //AlertDialog对话框
         AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
         alertDialog.setTitle("提示");
-        alertDialog.setMessage("不能重复添加相同的应用");
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
+        alertDialog.setMessage("请修改你的规则：");
+        alertDialog.setView(editText);
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", (dialog, which) -> {
+
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,"确定", (dialog, which) -> {
+            int i = rService.updateRule(AppPackageName, String.valueOf(editText.getText()));
+            if (i > 0){
+                Toast.makeText(AppInformationActivity.this, "修改成功", Toast.LENGTH_LONG).show();
             }
         });
         alertDialog.show();
