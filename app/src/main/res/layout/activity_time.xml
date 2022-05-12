@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.TimeActivity">
+    tools:context=".activities.TimeActivity"
+    android:background="@drawable/background_main"
+    >
 
     <LinearLayout
         android:id="@+id/l1"
@@ -19,7 +21,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/ad_content"
             android:text="什么也没有哇！"
-            android:textSize="25dp"/>
+            android:textSize="25dp"
+            android:textColor="@color/white"/>
 
 
     </LinearLayout>
@@ -32,7 +35,8 @@
         android:layout_below="@+id/l1"
         android:gravity="center"
         android:text="累计跳过广告次数：0"
-        android:textSize="30dp" />
+        android:textSize="30dp"
+        android:textColor="@color/black"/>
 
     <TextView
         android:id="@+id/btn1"

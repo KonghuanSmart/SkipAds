@@ -49,12 +49,6 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        Button btn3 = findViewById(R.id.btn3);
-        btn3.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ReminderActivity.class);
-            startActivity(intent);
-        });
-
         Button btn4 = findViewById(R.id.btn4);
         btn4.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, TimeActivity.class);

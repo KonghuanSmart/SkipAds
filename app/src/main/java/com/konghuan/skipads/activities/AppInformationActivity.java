@@ -29,8 +29,6 @@ public class AppInformationActivity extends AppCompatActivity {
     private Button btn_delete;
     private Button btn_white_on;
     private Button btn_white_off;
-    private Button btn_reminder_on;
-    private Button btn_reminder_off;
 
     private String activityName;
     private String AppPackageName;
@@ -61,8 +59,6 @@ public class AppInformationActivity extends AppCompatActivity {
             btn_delete.setVisibility(View.INVISIBLE);
             btn_white_on.setVisibility(View.INVISIBLE);
             btn_white_off.setVisibility(View.INVISIBLE);
-            btn_reminder_on.setVisibility(View.VISIBLE);
-            btn_reminder_off.setVisibility(View.INVISIBLE);
             break;
             case "White":
             //默认没有在白名单
@@ -71,8 +67,6 @@ public class AppInformationActivity extends AppCompatActivity {
             btn_delete.setVisibility(View.INVISIBLE);
             btn_white_on.setVisibility(View.INVISIBLE);
             btn_white_off.setVisibility(View.VISIBLE);
-            btn_reminder_on.setVisibility(View.INVISIBLE);
-            btn_reminder_off.setVisibility(View.INVISIBLE);
             break;
             case "Self_Defined":if (Rule_exist(AppPackageName)){
                 //自定义规则默认为没有
@@ -81,16 +75,12 @@ public class AppInformationActivity extends AppCompatActivity {
                 btn_delete.setVisibility(View.INVISIBLE);
                 btn_white_on.setVisibility(View.INVISIBLE);
                 btn_white_off.setVisibility(View.INVISIBLE);
-                btn_reminder_on.setVisibility(View.INVISIBLE);
-                btn_reminder_off.setVisibility(View.INVISIBLE);
             }else{
                 btn_add.setVisibility(View.INVISIBLE);
                 btn_renewal.setVisibility(View.VISIBLE);
                 btn_delete.setVisibility(View.VISIBLE);
                 btn_white_on.setVisibility(View.INVISIBLE);
                 btn_white_off.setVisibility(View.INVISIBLE);
-                btn_reminder_on.setVisibility(View.INVISIBLE);
-                btn_reminder_off.setVisibility(View.INVISIBLE);
             }break;
             case "LocalAppList":
             //自定义规则默认为没有
@@ -99,8 +89,6 @@ public class AppInformationActivity extends AppCompatActivity {
             btn_delete.setVisibility(View.INVISIBLE);
             btn_white_on.setVisibility(View.VISIBLE);
             btn_white_off.setVisibility(View.INVISIBLE);
-            btn_reminder_on.setVisibility(View.INVISIBLE);
-            btn_reminder_off.setVisibility(View.VISIBLE);
             break;
         }
 
@@ -117,8 +105,6 @@ public class AppInformationActivity extends AppCompatActivity {
         btn_delete = findViewById(R.id.btn_delete);
         btn_white_on = findViewById(R.id.btn_white_on);
         btn_white_off = findViewById(R.id.btn_white_off);
-        btn_reminder_on = findViewById(R.id.btn_reminder_on);
-        btn_reminder_off = findViewById(R.id.btn_reminder_off);
     }
 
     public void initDate(){
@@ -173,32 +159,6 @@ public class AppInformationActivity extends AppCompatActivity {
             }
         });
         alertDialog.show();
-    }
-
-    //隐藏跳过提示（从数据库移除）
-    public void button_reminder_on(View view) {
-        service = new AppService(this);
-        service.delApp(AppPackageName,"Reminder");
-    }
-
-    //显示跳过提示（添加进数据库）
-    public void button_reminder_off(View view) {
-        if (White_Reminder_exist(AppPackageName, "Reminder")){
-            //AlertDialog对话框
-            AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
-            alertDialog.setTitle("提示");
-            alertDialog.setMessage("确定要隐藏跳过提示吗？");
-            alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    service = new AppService(AppInformationActivity.this);
-                    service.addApp(AppPackageName,"Reminder");
-                }
-            });
-            alertDialog.show();
-        }else {
-            remind();
-        }
     }
 
     public boolean Rule_exist(String appPackageName){

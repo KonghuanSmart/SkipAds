@@ -32,12 +32,8 @@ public class AppDaoImpl implements AppDao{
     @Override
     public int addApp(String packagename, String activityname) {
         SQLiteStatement statement = null;
-        switch (activityname){
-            case "White" : statement = db.compileStatement("insert into "+ Constants.TABLE_WHITE+"(packagename) values(?)");
-            break;
-
-            case "Reminder" : statement = db.compileStatement("insert into "+ Constants.TABLE_REMINDER+"(packagename) values(?)");
-            break;
+        if ("White".equals(activityname)) {
+            statement = db.compileStatement("insert into " + Constants.TABLE_WHITE + "(packagename) values(?)");
         }
         statement.bindString(1, packagename);
         return (int) statement.executeInsert();
@@ -46,14 +42,9 @@ public class AppDaoImpl implements AppDao{
     @Override
     public int delApp(String packagename, String activityname) {
         SQLiteStatement statement = null;
-        switch (activityname){
-            case "White" : statement = db.compileStatement("delete from "+Constants.TABLE_WHITE+" where packagename = ?");
-                statement.bindString(1, packagename);
-                break;
-
-            case "Reminder" : statement = db.compileStatement("delete from "+Constants.TABLE_REMINDER+" where packagename = ?");
-                statement.bindString(1, packagename);
-                break;
+        if ("White".equals(activityname)) {
+            statement = db.compileStatement("delete from " + Constants.TABLE_WHITE + " where packagename = ?");
+            statement.bindString(1, packagename);
         }
         return statement.executeUpdateDelete();
     }
@@ -70,8 +61,8 @@ public class AppDaoImpl implements AppDao{
     @Override
     public String getAppByName(String name,String activityName) {
         Cursor cursor = null;
-        switch (activityName) {
-            case "White" : cursor = db.query(
+        if ("White".equals(activityName)) {
+            cursor = db.query(
                     Constants.TABLE_WHITE,
                     new String[]{"*"},
                     "packagename=?",
@@ -79,16 +70,7 @@ public class AppDaoImpl implements AppDao{
                     null,
                     null,
                     null
-            );break;
-            case "Reminder" : cursor = db.query(
-                    Constants.TABLE_REMINDER,
-                    new String[]{"*"},
-                    "packagename=?",
-                    new String[]{name},
-                    null,
-                    null,
-                    null
-            );break;
+            );
         }
         if (cursor.moveToNext()){
             return cursor.getString(cursor.getColumnIndex("packagename"));
@@ -102,8 +84,8 @@ public class AppDaoImpl implements AppDao{
     public List<String> getAllApp(String activityName) {
         List<String> list = new ArrayList<>();
         Cursor cursor = null;
-        switch (activityName){
-            case "White" : cursor = db.query(
+        if ("White".equals(activityName)) {
+            cursor = db.query(
                     Constants.TABLE_WHITE,
                     new String[]{"*"},
                     null,
@@ -111,16 +93,7 @@ public class AppDaoImpl implements AppDao{
                     null,
                     null,
                     null
-            );break;
-            case "Reminder" : cursor = db.query(
-                    Constants.TABLE_REMINDER,
-                    new String[]{"*"},
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
-            );break;
+            );
         }
         while (cursor.moveToNext()){
             list.add(cursor.getString(cursor.getColumnIndex("packagename")));
