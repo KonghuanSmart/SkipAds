@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@drawable/settings"
 >
 
     <ToggleButton
@@ -14,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="70dp"
-        android:textColor="@color/white"/>
+        android:textSize="0dp"/>
 
     <Button
         android:id="@+id/btn1"
@@ -80,7 +81,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginLeft="70dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/textview_style2"
@@ -93,7 +94,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:gravity="center"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:layout_marginBottom="10dp"
         android:layout_marginRight="70dp"
         android:background="@drawable/textview_style2"

@@ -128,9 +128,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         if (SkipAdsService.isRunningOn()){
-            btn.setBackgroundResource((R.drawable.earth_color));
+            btn.setBackgroundResource((R.drawable.switch_on));
         }else {
-            btn.setBackgroundResource((R.drawable.earth_white));
+            btn.setBackgroundResource((R.drawable.switch_off));
         }
     }
 
