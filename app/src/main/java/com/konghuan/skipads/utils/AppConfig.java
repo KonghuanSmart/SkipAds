@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 
+import com.konghuan.skipads.Constants;
 import com.konghuan.skipads.bean.APP;
 
 import java.util.ArrayList;
@@ -27,8 +28,8 @@ public class AppConfig {
             app.setName(packageInfo.applicationInfo.loadLabel(context.getPackageManager()).toString());
             app.setEdition(packageInfo.versionName);
             app.setPackageName(packageInfo.packageName);
-            if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0)     {
-                appList.add(app);//如果非系统应用，则添加至appList
+            if((packageInfo.applicationInfo.flags& ApplicationInfo.FLAG_SYSTEM)==0 && !packageInfo.packageName.equals(Constants.APP_NAME))     {
+                appList.add(app);//如果非系统应用且并非自己，则添加至appList
             }
         }
         return appList;

@@ -1,5 +1,6 @@
 package com.konghuan.skipads.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -62,6 +63,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
                 intent.putExtra("AppPackage",app.getPackageName());
 
                 mContext.startActivity(intent);
+                ((Activity) mContext).finish();
             }
         });
     }

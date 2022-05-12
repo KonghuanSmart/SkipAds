@@ -1,18 +1,16 @@
 package com.konghuan.skipads.activities;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.pm.PackageInfo;
-import android.os.Bundle;
 
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.adapter.MyAdapter;
 import com.konghuan.skipads.bean.APP;
 import com.konghuan.skipads.utils.AppConfig;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class LocalAppListActivity extends AppCompatActivity {
@@ -44,8 +42,7 @@ public class LocalAppListActivity extends AppCompatActivity {
     }
 
     private void intData() {
-        AppConfig appConfig = new AppConfig();
-        mAppList = appConfig.getAppList(this);
+        mAppList = AppConfig.getAppList(this);
     }
 
     private void initView() {

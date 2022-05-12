@@ -20,6 +20,7 @@ import androidx.annotation.RequiresApi;
 
 import com.konghuan.skipads.Constants;
 import com.konghuan.skipads.R;
+import com.konghuan.skipads.service.SkipAdsService;
 
 
 public class SettingActivity extends Activity implements View.OnClickListener {
@@ -55,6 +56,10 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         showSkipToast = findViewById(R.id.show_skip_toast);
         showSkipToast.setOnClickListener(this);
 
+        SharedPreferences sharedPreferences = getSharedPreferences();
+        hideMe.setChecked(sharedPreferences.getBoolean("hide_me", true));
+        showSkipToast.setChecked(sharedPreferences.getBoolean("show_skip_toast", false));
+
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -66,7 +71,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
                 protectMe.setChecked(true);
             }
             SharedPreferences sharedPreferences = getSharedPreferences();
-            boolean hide_me = sharedPreferences.getBoolean("hide_me", false);
+            boolean hide_me = sharedPreferences.getBoolean("hide_me", true);
             hideMe.setChecked(hide_me);
         }
     }
@@ -83,6 +88,9 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         SharedPreferences.Editor editor = getSharedPreferencesEditor();
         editor.putBoolean("show_skip_toast",showSkipToast.isChecked());
         editor.apply();
+        if (SkipAdsService.isRunningOn()){
+            SkipAdsService.setShowTips(showSkipToast.isChecked());
+        }
     }
 
     private void saveHideMe(boolean flag){

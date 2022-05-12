@@ -7,8 +7,11 @@
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/button_style.xml" value="0.16302083333333334" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/button_style2.xml" value="0.23055555555555557" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/button_style3.xml" value="0.14947916666666666" />
+        <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/button_style_on_touch.xml" value="0.23703703703703705" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/edit_style.xml" value="0.15364583333333334" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/drawable/ic_launcher_background.xml" value="0.16302083333333334" />
+        <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/layout/activity_app_information.xml" value="0.23641304347826086" />
+        <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/layout/activity_local_app_list.xml" value="0.23641304347826086" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/layout/activity_login.xml" value="0.1375" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/AndroidProjects/SkipAds/app/src/main/res/layout/activity_main2.xml" value="0.1375" />
@@ -24,7 +27,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="false" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

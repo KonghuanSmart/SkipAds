@@ -29,7 +29,9 @@ public class SkipAdsService extends AccessibilityService {
 
     private static AppService appService;
     private static List<String> whiteList;
+
     private static boolean running = false;
+    private static boolean showTips = false;
 
     public static boolean isRunningOn(){
         return running;
@@ -41,7 +43,10 @@ public class SkipAdsService extends AccessibilityService {
         appService = new AppService(this);
         whiteList = appService.getAllApp("White");
         rules = service.getAllRule();
+        setShowTips(ConfigUtil.getSharedPreferences(this, Constants.SHARE_NAME).getBoolean("show_skip_toast", false));
     }
+
+    public static void setShowTips(boolean b){showTips = b;}
 
     public static void updateRules(String name){
         rules.remove(name);
@@ -50,10 +55,10 @@ public class SkipAdsService extends AccessibilityService {
         rules.put(name, rule);
     }
 
-    public static void addWhiteList(String name){
+    public static void addToWhiteList(String name){
         whiteList.add(name);
     }
-    public static void removeWhiteList(String name){
+    public static void removeFromWhiteList(String name){
         whiteList.remove(name);
     }
 
@@ -88,11 +93,11 @@ public class SkipAdsService extends AccessibilityService {
             boolean isActivity = activityInfo != null;
             if (isActivity) {
                 String packageName = nodeInfo.getPackageName().toString();
+                Log.d(TAG, "当前前台包名" + nodeInfo.getPackageName());
                 if (packageName.equals(Constants.APP_NAME) || whiteList.contains(packageName)){
-                    Log.d(TAG,"白名单！");
+                    Log.d(TAG,"白名单 -> " + packageName);
                     return;
                 }
-                Log.d(TAG, "当前前台包名" + nodeInfo.getPackageName());
                 String rule = rules.get(nodeInfo.getPackageName().toString());
                 if (rule != null){
                     Log.d(TAG, "通过规则[ " + rule + " ] 跳过广告！");
@@ -132,9 +137,8 @@ public class SkipAdsService extends AccessibilityService {
                                     editor.putString("packageName", (String) info.getPackageName());
                                     editor.putString("id", info.getViewIdResourceName());
                                     editor.apply();
-                                    Log.d(TAG, str2);
-                                    SharedPreferences sharedPreferences1 = ConfigUtil.getSharedPreferences(this, Constants.SHARE_NAME);
-                                    if (sharedPreferences1.getBoolean("show_skip_toast", false)){
+                                    Log.d(TAG, "智能识别跳过：" + str2);
+                                    if (showTips){
                                         Toast.makeText(this, "跳过广告", Toast.LENGTH_SHORT).show();
                                     }
                                 }
@@ -151,8 +155,7 @@ public class SkipAdsService extends AccessibilityService {
     private void skipAdsByRule(List<AccessibilityNodeInfo> nodeInfoList) {
         if (nodeInfoList.size() > 0) {
             nodeInfoList.get(0).performAction(AccessibilityNodeInfo.ACTION_CLICK);
-            SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(this, Constants.SHARE_NAME);
-            if (sharedPreferences.getBoolean("show_skip_toast", false)){
+            if (showTips){
                 Toast.makeText(getApplicationContext(), "跳过广告", Toast.LENGTH_SHORT).show();
             }
         }

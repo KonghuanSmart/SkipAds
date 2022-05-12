@@ -3,6 +3,7 @@ package com.konghuan.skipads.activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.konghuan.skipads.R;
 import com.konghuan.skipads.bean.APP;
 import com.konghuan.skipads.service.AppService;
 import com.konghuan.skipads.service.RuleService;
+import com.konghuan.skipads.service.SkipAdsService;
 import com.konghuan.skipads.utils.AppConfig;
 
 public class AppInformationActivity extends AppCompatActivity {
@@ -39,7 +41,7 @@ public class AppInformationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app_information);
-
+        rService = new RuleService(this);
         initView();
         initDate();
 
@@ -114,8 +116,34 @@ public class AppInformationActivity extends AppCompatActivity {
     }
 
     public void buttonadd(View view) {
-        rService = new RuleService(this);
-        rService.addRule(AppPackageName,"1");
+        EditText editText = new EditText(this);
+        editText.requestFocus();
+        editText.setFocusable(true);
+        //AlertDialog对话框
+        AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
+        alertDialog.setTitle("提示");
+        alertDialog.setMessage("请填写你的规则：");
+        alertDialog.setView(editText);
+
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", (dialog, which) -> {
+
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,"确定", (dialog, which) -> {
+            String text = String.valueOf(editText.getText());
+            if (!TextUtils.isEmpty(text)){
+                int i = rService.addRule(AppPackageName, text);
+                if (i > 0){
+                    Toast.makeText(AppInformationActivity.this, "添加成功!", Toast.LENGTH_LONG).show();
+                    finish();
+                }else {
+                    Toast.makeText(AppInformationActivity.this, "添加失败!", Toast.LENGTH_LONG).show();
+                }
+            }else {
+                Toast.makeText(AppInformationActivity.this, "规则不能为空!", Toast.LENGTH_LONG).show();
+            }
+
+        });
+        alertDialog.show();
     }
 
     public void buttonrenewal(View view) {
@@ -127,11 +155,17 @@ public class AppInformationActivity extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
         alertDialog.setTitle("提示");
         alertDialog.setMessage("确定要删除吗？");
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                rService = new RuleService(AppInformationActivity.this);
-                rService.delRule(AppPackageName);
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", (dialog, which) -> {
+            rService = new RuleService(AppInformationActivity.this);
+            int i = rService.delRule(AppPackageName);
+            if (i > 0){
+                Toast.makeText(AppInformationActivity.this, "删除成功！", Toast.LENGTH_LONG).show();
+                if (SkipAdsService.isRunningOn()){
+                    SkipAdsService.updateRules(AppPackageName);
+                }
+                finish();
+            }else {
+                Toast.makeText(AppInformationActivity.this, "删除失败!", Toast.LENGTH_LONG).show();
             }
         });
         alertDialog.show();
@@ -141,6 +175,11 @@ public class AppInformationActivity extends AppCompatActivity {
         if (White_Reminder_exist(AppPackageName, "White")){
             service = new AppService(this);
             service.addApp(AppPackageName,"White");
+            if (SkipAdsService.isRunningOn()){
+                SkipAdsService.addToWhiteList(AppPackageName);
+            }
+            finish();
+            Toast.makeText(AppInformationActivity.this, "成功添加到白名单!", Toast.LENGTH_LONG).show();
         }else {
             remind();
         }
@@ -156,6 +195,11 @@ public class AppInformationActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 service = new AppService(AppInformationActivity.this);
                 service.delApp(AppPackageName,"White");
+                if (SkipAdsService.isRunningOn()){
+                    SkipAdsService.removeFromWhiteList(AppPackageName);
+                }
+                finish();
+                Toast.makeText(AppInformationActivity.this, "成功从白名单中移出!", Toast.LENGTH_LONG).show();
             }
         });
         alertDialog.show();
@@ -184,11 +228,7 @@ public class AppInformationActivity extends AppCompatActivity {
         AlertDialog alertDialog = new AlertDialog.Builder(AppInformationActivity.this).create();
         alertDialog.setTitle("提示");
         alertDialog.setMessage("不能重复添加相同的应用");
-        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", (dialog, which) -> {});
         alertDialog.show();
     }
 
@@ -209,7 +249,12 @@ public class AppInformationActivity extends AppCompatActivity {
         alertDialog.setButton(DialogInterface.BUTTON_POSITIVE,"确定", (dialog, which) -> {
             int i = rService.updateRule(AppPackageName, String.valueOf(editText.getText()));
             if (i > 0){
-                Toast.makeText(AppInformationActivity.this, "修改成功", Toast.LENGTH_LONG).show();
+                if (SkipAdsService.isRunningOn()){
+                    SkipAdsService.updateRules(AppPackageName, String.valueOf(editText.getText()));
+                }
+                Toast.makeText(AppInformationActivity.this, "修改成功!", Toast.LENGTH_LONG).show();
+            }else {
+                Toast.makeText(AppInformationActivity.this, "修改失败!", Toast.LENGTH_LONG).show();
             }
         });
         alertDialog.show();

@@ -14,7 +14,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.adapter.MyAdapter;
 import com.konghuan.skipads.bean.APP;
@@ -109,6 +108,7 @@ public class WhiteListActivity extends AppCompatActivity {
         if (item.getItemId() == R.id.logout_localapp) {
             Intent intent = new Intent(WhiteListActivity.this, LocalAppListActivity.class);
             startActivity(intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }
