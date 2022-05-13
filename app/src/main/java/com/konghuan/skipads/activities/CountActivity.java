@@ -23,7 +23,7 @@ import com.konghuan.skipads.service.RuleService;
 import com.konghuan.skipads.service.SkipAdsService;
 import com.konghuan.skipads.utils.ConfigUtil;
 
-public class TimeActivity extends AppCompatActivity {
+public class CountActivity extends AppCompatActivity {
 
     private Handler handler;
     private TextView adContent;
@@ -56,7 +56,7 @@ public class TimeActivity extends AppCompatActivity {
     }
 
     public void removeRule(){
-        SharedPreferences.Editor editor = ConfigUtil.getSharedPreferencesEditor(TimeActivity.this, Constants.RECORD_INFO);
+        SharedPreferences.Editor editor = ConfigUtil.getSharedPreferencesEditor(CountActivity.this, Constants.RECORD_INFO);
         editor.remove("packageName");
         editor.remove("id");
         editor.remove("isSave");
@@ -67,7 +67,7 @@ public class TimeActivity extends AppCompatActivity {
     }
 
     public void saveRule(){
-        SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(TimeActivity.this, Constants.RECORD_INFO);
+        SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(CountActivity.this, Constants.RECORD_INFO);
         String packageName = sharedPreferences.getString("packageName", null);
         String rule = sharedPreferences.getString("id",null);
         if (packageName != null && rule != null){
@@ -99,7 +99,7 @@ public class TimeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ruleService = new RuleService(this);
-        setContentView(R.layout.activity_time);
+        setContentView(R.layout.activity_count);
 
         getSupportActionBar().setTitle("跳过详情");
 
@@ -112,7 +112,7 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //AlertDialog对话框
-                AlertDialog alertDialog = new AlertDialog.Builder(TimeActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(CountActivity.this).create();
                 alertDialog.setTitle("使用说明");
                 alertDialog.setMessage("上面部分会显示上一次自动跳过的规则，下面部分是累计自动跳过广告的总次数。");
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
@@ -129,7 +129,7 @@ public class TimeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //AlertDialog对话框
-                AlertDialog alertDialog = new AlertDialog.Builder(TimeActivity.this).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(CountActivity.this).create();
                 alertDialog.setTitle("问题反馈");
                 alertDialog.setMessage("有问题请加QQ群：123456789反馈");
                 alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
@@ -146,7 +146,7 @@ public class TimeActivity extends AppCompatActivity {
             public void handleMessage(@NonNull Message msg) {
                 super.handleMessage(msg);
                 if (msg.what == CHANGE_TEXT){
-                    SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(TimeActivity.this, Constants.RECORD_INFO);
+                    SharedPreferences sharedPreferences = ConfigUtil.getSharedPreferences(CountActivity.this, Constants.RECORD_INFO);
                     String value = sharedPreferences.getString("value", "什么也没有哇！");
                     adContent.setText(value);
                     int times = sharedPreferences.getInt("times", 0);

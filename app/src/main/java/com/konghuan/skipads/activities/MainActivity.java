@@ -215,9 +215,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onResume() {
         super.onResume();
         if (SkipAdsService.isRunningOn()){
-            btn.setBackgroundResource((R.drawable.switch_on));
+            btn.setBackgroundResource((R.drawable.service_on));
         }else {
-            btn.setBackgroundResource((R.drawable.switch_off));
+            btn.setBackgroundResource((R.drawable.service_off));
         }
     }
 
@@ -263,7 +263,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(intent);
                 break;
             case R.id.btn4:
-                intent = new Intent(MainActivity.this, TimeActivity.class);
+                intent = new Intent(MainActivity.this, CountActivity.class);
                 startActivity(intent);
                 break;
             case R.id.btn5:

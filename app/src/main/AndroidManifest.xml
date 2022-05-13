@@ -34,7 +34,7 @@
 
         <activity android:name=".activities.MainActivity" />
         <activity android:name=".activities.SettingActivity" />
-        <activity android:name=".activities.TimeActivity" />
+        <activity android:name=".activities.CountActivity" />
         <activity android:name=".activities.Self_DefinedActivity" />
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.RegisterActivity" />

@@ -115,11 +115,11 @@ public class SkipAdsService extends AccessibilityService {
                                 String msg = charSequence.toString();
                                 if (msg.contains("跳过")) {
                                     info.performAction(AccessibilityNodeInfo.ACTION_CLICK);
-                                    String str = " PackageName: "
+                                    String str = " packageName: "
                                             +info.getPackageName()
-                                            +"\n ClassName: "
+                                            +"\n className: "
                                             +info.getClassName()
-                                            +"\n viewIdResName: "+info.getViewIdResourceName()
+                                            +"\n adRule: "+info.getViewIdResourceName()
                                             +"\n checkable: "+info.isCheckable()
                                             +"\n visible: "+info.isVisibleToUser();
                                     String str2 = "PackageName: "
