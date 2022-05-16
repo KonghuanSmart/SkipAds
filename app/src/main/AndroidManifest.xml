@@ -4,6 +4,7 @@
     package="com.konghuan.skipads">
 
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
@@ -17,6 +18,10 @@
         android:theme="@style/Theme.SkipAds">
         <activity android:name=".activities.LocalAppListActivity" />
         <activity android:name=".activities.AppInformationActivity" />
+
+        <service android:name=".service.KeepAliveService"
+            android:enabled="true"
+            android:foregroundServiceType="location" />
 
         <service
             android:name=".service.SkipAdsService"

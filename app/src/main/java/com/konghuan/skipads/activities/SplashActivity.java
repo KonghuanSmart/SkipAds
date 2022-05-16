@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.konghuan.skipads.Constants;
 import com.konghuan.skipads.R;
+import com.konghuan.skipads.service.KeepAliveService;
 import com.konghuan.skipads.utils.AppConfig;
 
 /**
@@ -16,7 +19,7 @@ import com.konghuan.skipads.utils.AppConfig;
  *
  */
 public class SplashActivity extends Activity {
-
+    private final String TAG = getClass().getName() + Constants.TAG_TAIL;
 
     @Override
     protected void onCreate(Bundle bundle) {
@@ -33,6 +36,13 @@ public class SplashActivity extends Activity {
         }
         setContentView(view);
         super.onCreate(bundle);
+        try {
+            Intent intent = new Intent(this, KeepAliveService.class);
+            startForegroundService(intent);
+        }catch (Exception e){
+            Log.d(TAG, "Start keepAliveService failed : " + e.getMessage());
+        }
+
     }
 
     @Override

@@ -10,6 +10,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -22,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.konghuan.skipads.Constants;
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.entity.Rule;
 import com.konghuan.skipads.service.RuleService;
@@ -35,6 +37,9 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, View.OnTouchListener{
+
+    private final String TAG = getClass().getName() + Constants.TAG_TAIL;
+
     private Button btn;
     private RuleService service;
 
@@ -243,6 +248,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         return super.onOptionsItemSelected(item);
     }
 
+    private void showTips(){
+        androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this).create();
+        alertDialog.setIcon(R.drawable.tips);
+        alertDialog.setTitle("温馨提示");
+        alertDialog.setMessage("    即将跳转到系统授权界面，需要您在 [已下载的应用] -> [SkipAds] 中打开本应用的服务！");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                SettingsHelper.applyForAccessibilityPermission(MainActivity.this);
+            }
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG, "onClick: 取消");
+            }
+        });
+        alertDialog.show();
+    }
+
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -251,7 +276,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()){
             case R.id.tv1:
                 if (!SkipAdsService.isRunningOn()){
-                    SettingsHelper.applyForAccessibilityPermission(MainActivity.this);
+                    showTips();
                 }
                 break;
             case R.id.btn1:

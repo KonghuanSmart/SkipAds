@@ -2,8 +2,9 @@ package com.konghuan.skipads.activities;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Switch;
@@ -21,6 +23,9 @@ import androidx.annotation.RequiresApi;
 import com.konghuan.skipads.Constants;
 import com.konghuan.skipads.R;
 import com.konghuan.skipads.service.SkipAdsService;
+
+import java.util.Iterator;
+import java.util.List;
 
 
 public class SettingActivity extends Activity implements View.OnClickListener {
@@ -57,7 +62,15 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         showSkipToast.setOnClickListener(this);
 
         SharedPreferences sharedPreferences = getSharedPreferences();
-        hideMe.setChecked(sharedPreferences.getBoolean("hide_me", true));
+        boolean hide_me = sharedPreferences.getBoolean("hide_me", true);
+        hideMe.setChecked(hide_me);
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.AppTask> appTasks = manager.getAppTasks();
+        Iterator<ActivityManager.AppTask> iterator = appTasks.iterator();
+        if (iterator.hasNext()){
+            ActivityManager.AppTask appTask = iterator.next();
+            appTask.setExcludeFromRecents(hide_me);
+        }
         showSkipToast.setChecked(sharedPreferences.getBoolean("show_skip_toast", false));
 
     }
@@ -72,6 +85,13 @@ public class SettingActivity extends Activity implements View.OnClickListener {
             }
             SharedPreferences sharedPreferences = getSharedPreferences();
             boolean hide_me = sharedPreferences.getBoolean("hide_me", true);
+            ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+            List<ActivityManager.AppTask> appTasks = manager.getAppTasks();
+            Iterator<ActivityManager.AppTask> iterator = appTasks.iterator();
+            if (iterator.hasNext()){
+                ActivityManager.AppTask appTask = iterator.next();
+                appTask.setExcludeFromRecents(hide_me);
+            }
             hideMe.setChecked(hide_me);
         }
     }
@@ -125,18 +145,29 @@ public class SettingActivity extends Activity implements View.OnClickListener {
             intent.setData(Uri.parse("package:" + getPackageName()));
             startActivity(intent);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.d(TAG, "requestIgnoreBatteryOptimizations: "+e.getMessage());
         }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void protectMeFromPowerManager(){
-        AlertDialog.Builder dialog = new AlertDialog.Builder(this);
-        dialog.setIcon(R.drawable.tips)
-                .setTitle("温馨提示")
-                .setMessage("需要您在 [应用信息] -> [省电策略] 手动设置本应用的后台配置！")
-                .setOnCancelListener(dialogInterface -> requestIgnoreBatteryOptimizations())
-                .show();
+        androidx.appcompat.app.AlertDialog alertDialog = new androidx.appcompat.app.AlertDialog.Builder(SettingActivity.this).create();
+        alertDialog.setIcon(R.drawable.tips);
+        alertDialog.setTitle("温馨提示");
+        alertDialog.setMessage("需要您在 [应用信息] -> [省电策略] 手动设置本应用的后台配置！");
+        alertDialog.setButton(DialogInterface.BUTTON_POSITIVE, "确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                requestIgnoreBatteryOptimizations();
+            }
+        });
+        alertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.d(TAG, "onClick: 取消");
+            }
+        });
+        alertDialog.show();
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -146,6 +177,7 @@ public class SettingActivity extends Activity implements View.OnClickListener {
         switch (v.getId()){
             case R.id.hide_me_switch:
                 hideApplicationFromTaskList();
+                onResume();
                 break;
             case R.id.protect_me_switch:
                 protectMeFromPowerManager();
